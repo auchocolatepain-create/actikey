@@ -1,28 +1,28 @@
 plugins {
-  id("com.android.application")
-  id("org.jetbrains.kotlin.android")
+  id 'com.android.application'
+  id 'org.jetbrains.kotlin.android'
 }
 
 android {
-  namespace = "org.actikey"
-  compileSdk = 34
+  namespace 'org.actikey'
+  compileSdk 34
   defaultConfig {
-    minSdk = 26
-    targetSdk = 34
+    minSdk 26
+    targetSdk 34
     // Exactly two typing languages.
-    resourceConfigurations.addAll(listOf("en", "fa"))
-    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    resourceConfigurations += ['en', 'fa']
+    testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
   }
   buildTypes {
-    release { isMinifyEnabled = true; isShrinkResources = true }
+    release { minifyEnabled true; shrinkResources true }
     debug {}
   }
-  flavorDimensions.add("mode")
+  flavorDimensions 'mode'
   productFlavors {
-    create("actikey") { dimension = "mode" }
+    create('actikey') { dimension 'mode' }
   }
-  compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
-  kotlinOptions { jvmTarget = "17" }
+  compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+  kotlinOptions { jvmTarget = '17' }
 }
 
 dependencies {
@@ -30,8 +30,8 @@ dependencies {
   // overlay compiles against them. Zero new heavy deps by policy:
   // no OkHttp/Retrofit/cronet/Gson — JSON via org.json (platform), HTTP via
   // java.net.HttpURLConnection, secure storage via androidx.security-crypto.
-  implementation("androidx.security:security-crypto:1.1.0")
-  implementation("androidx.preference:preference-ktx:1.2.1")
-  testImplementation("junit:junit:4.13.2")
-  testImplementation("org.robolectric:robolectric:4.11.1")
+  implementation 'androidx.security:security-crypto:1.1.0'
+  implementation 'androidx.preference:preference-ktx:1.2.1'
+  testImplementation 'junit:junit:4.13.2'
+  testImplementation 'org.robolectric:robolectric:4.11.1'
 }

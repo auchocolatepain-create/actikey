@@ -1,0 +1,1 @@
+{"allowed_tools": [], "auto_replace": false, "name": "rewrite", "op": "rewrite", "system_prompt": "Rewrite preserving meaning, names, numbers, negation, tone. Persian: keep ZWNJ/spacing. Output only the result."}

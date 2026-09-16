@@ -1,0 +1,1 @@
+{"api_key_env": "LMSTUDIO_API_KEY", "bind": "0.0.0.0", "connect_timeout_ms": 2000, "expected_model": "Qwen3.5-4B-Q4_K_M", "extended_deadline_ms": 120000, "first_output_timeout_ms": 15000, "note": "Copy to server_config.json (git-ignored). Never commit a real key.", "ordinary_deadline_ms": 60000, "port": 1234}

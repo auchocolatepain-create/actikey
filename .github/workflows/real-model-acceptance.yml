@@ -1,0 +1,33 @@
+name: real-model-acceptance (target Windows/NVIDIA laptop only)
+
+# Manual only. Requires the actual LM Studio server + NVIDIA GPU.
+# Mock results must never be presented as proof of inference.
+on:
+  workflow_dispatch:
+    inputs:
+      server:
+        description: 'LM Studio base URL (e.g. http://127.0.0.1:1234)'
+        required: true
+      model:
+        description: 'Model id (default Qwen3.5-4B Q4_K_M)'
+        required: false
+        default: 'Qwen3.5-4B-Q4_K_M'
+
+jobs:
+  real-model:
+    runs-on: [self-hosted, windows, gpu]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run real-model acceptance (60 cases, ≥90% to pass, 0 unauthorized tools)
+        env:
+          LMSTUDIO_API_KEY: ${{ secrets.LMSTUDIO_API_KEY }}
+        run: |
+          python laptop/acceptance/run_real_model_tests.py --server "${{ inputs.server }}" --model "${{ inputs.model }}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: real-model-report
+          path: laptop/acceptance/last_report.*

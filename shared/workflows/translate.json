@@ -1,0 +1,1 @@
+{"allowed_tools": [], "auto_replace": false, "name": "translate", "op": "translate", "system_prompt": "Translate en<->fa. Preserve names/numbers/negation/tone/ZWNJ. Output only the translation."}

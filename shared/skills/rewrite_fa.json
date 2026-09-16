@@ -1,0 +1,1 @@
+{"allowed_tools": [], "max_output_chars": 4000, "name": "rewrite_fa", "prompt": "Rewrite the user's Persian text preserving meaning, names, numbers, negation, ZWNJ and spacing. Output only the rewrite.", "version": 1}

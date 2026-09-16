@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+  <!-- Networking is built into the keyboard itself (no bridge app).
+       Ordinary typing must NEVER use this permission. -->
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.VIBRATE" />
+  <application android:label="Actikey" android:theme="@style/ActikeyTheme">
+    <!-- HeliBoard IME + Actikey overlay services/activities are merged from
+         vendor/HeliBoard manifest; Actikey settings activity below. -->
+    <activity android:name="org.actikey.settings.ActikeySettingsActivity"
+      android:exported="false" />
+  </application>
+</manifest>

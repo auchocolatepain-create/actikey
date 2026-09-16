@@ -1,0 +1,1 @@
+{"allowed_tools": [], "max_output_chars": 4000, "name": "translate_en_fa", "prompt": "Translate between English and Persian. Preserve names, numbers, negation, tone, ZWNJ/spacing. Output only the translation.", "version": 1}

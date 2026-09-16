@@ -1,0 +1,1 @@
+{"allowed_tools": ["web_search"], "auto_replace": false, "name": "search_assist", "op": "instruct", "system_prompt": "Answer using web_search results only when cited. If lookup fails, say so. Never fabricate current information."}

@@ -1,0 +1,61 @@
+name: android-ci (APK + non-model tests, no GPU)
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Check HeliBoard pin retained
+        run: test -f android/HELIBOARD_PIN.md && grep -q HeliBoard android/HELIBOARD_PIN.md
+      - name: Check language trim (en + fa only)
+        run: |
+          python3 - <<'PY'
+          import pathlib, sys
+          bad = []
+          for p in pathlib.Path('android/app/src/main').rglob('*'):
+              s = str(p)
+              if 'values-' in s and not any(k in s for k in ('values-en', 'values-fa')):
+                  # allow non-language qualifiers (land, night, v31, swdp, etc.)
+                  import re
+                  m = re.search(r'values-([a-z]{2})(?:-r[A-Z]{2})?\b', s)
+                  if m: bad.append(s)
+          if bad:
+              print('Unexpected language resources:'); [print(' ', b) for b in bad]; sys.exit(1)
+          print('language trim OK (en + fa only)')
+          PY
+      - name: Build Actikey release APK
+        run: |
+          cd android
+          ./gradlew assembleActikeyRelease --console=plain
+      - name: Run non-model unit tests (no GPU)
+        run: |
+          cd android
+          ./gradlew testActikeyDebugUnitTest --console=plain
+      - name: Run mocked protocol tests (NOT proof of inference)
+        run: python3 evaluation/run_mock_protocol_tests.py
+      - name: Report APK size
+        run: |
+          ls -la android/app/build/outputs/apk/actikey/release/ || true
+          python3 - <<'PY'
+          import glob
+          for f in glob.glob('android/app/build/outputs/apk/actikey/release/*.apk'):
+              import os; print(f'{f}: {os.path.getsize(f)/1048576:.2f} MiB')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: actikey-apk-and-reports
+          path: |
+            android/app/build/outputs/apk/actikey/release/*.apk
+            evaluation/mock_results.json

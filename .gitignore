@@ -1,0 +1,11 @@
+server_config.json
+local.properties
+*.apk
+*.aab
+build/
+.gradle/
+.idea/
+evaluation/mock_results.json
+laptop/acceptance/last_report.json
+laptop/acceptance/last_report.md
+__pycache__/

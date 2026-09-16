@@ -20,7 +20,7 @@ class MockProtocolTest {
   @Test fun noChoicesIsCleanFail() {
     val r = client.parseResponse("{\"x\":1}", emptyList())
     assertTrue(r is ActikeyResult.Fail)
-    assertEquals("Bad server response: no choices.", (r as ActikeyResult.Fail).message.take(33).let { (r as ActikeyResult.Fail).message })
+    assertEquals("Bad server response: no choices.", (r as ActikeyResult.Fail).message)
   }
 
   @Test fun unknownToolRejected() {

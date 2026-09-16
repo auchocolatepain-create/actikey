@@ -33,5 +33,7 @@ dependencies {
   implementation 'androidx.security:security-crypto:1.1.0'
   implementation 'androidx.preference:preference-ktx:1.2.1'
   testImplementation 'junit:junit:4.13.2'
+  // Real org.json for plain-JVM unit tests (android.jar stubs throw Stub!).
+  testImplementation 'org.json:json:20240303'
   testImplementation 'org.robolectric:robolectric:4.11.1'
 }

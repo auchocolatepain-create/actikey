@@ -65,6 +65,7 @@ class LmStudioClient {
         // Real check happens in ActikeyRunner via HostnameVerifier/CertificatePinner hook;
         // placeholder: refuse to proceed unless caller verified (fail closed).
       }
+      val c = conn ?: return ActikeyResult.Fail(FailKind.UNAVAILABLE, "Laptop unavailable.")
       val body = JSONObject()
         .put("model", config.model)
         .put("stream", false)
@@ -78,19 +79,19 @@ class LmStudioClient {
           .put("function", JSONObject().put("name", t)))
         body.put("tools", tools).put("tool_choice", "auto")
       }
-      outputStream.use { it.write(body.toString().toByteArray(Charsets.UTF_8)) }
-      val code = conn.responseCode
+      c.outputStream.use { it.write(body.toString().toByteArray(Charsets.UTF_8)) }
+      val code = c.responseCode
       if (code == 401 || code == 403)
         return ActikeyResult.Fail(FailKind.AUTH, "LM Studio rejected the API key. Check key/server config.")
       if (code !in 200..299) {
         val err = runCatching {
-          BufferedReader(InputStreamReader(conn.errorStream ?: return@runCatching "")).readText()
+          BufferedReader(InputStreamReader(c.errorStream ?: return@runCatching "")).readText()
         }.getOrDefault("")
         return ActikeyResult.Fail(
           if (code >= 500) FailKind.UNAVAILABLE else FailKind.BAD_RESPONSE,
           "Server error ($code). " + err.take(200))
       }
-      val text = BufferedReader(InputStreamReader(conn.inputStream)).readText()
+      val text = BufferedReader(InputStreamReader(c.inputStream)).readText()
       parseResponse(text, allowedTools)
     } catch (e: java.net.SocketTimeoutException) {
       ActikeyResult.Fail(FailKind.TIMEOUT, "Laptop unavailable or too slow (timeout).")

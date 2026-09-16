@@ -6,9 +6,8 @@ toolchain until the offline gate + CI are green.
 ## Pin
 
 - Upstream: `https://github.com/Helium314/HeliBoard`
-- Pinned commit: `v2.3.1` tag (record exact SHA in `android/gradle/libs.versions.toml`
-  comment when syncing; example placeholder `SHA: heli-v2.3.1` — maintainer must
-  replace with `git rev-parse v2.3.1` output on sync).
+- Pinned tag: `v2.3` (SHA `0543ccdb2d9c99c689be2b9613aa3a2f74d844ac`).
+  Gradle wrapper in `android/` is taken verbatim from that tag (Gradle 8.9).
 - Integration method: `android/` is an overlay, not a fork-copy:
   - HeliBoard added as a git submodule at `android/vendor/HeliBoard` **or**
     Gradle source dependency pinned to the tag (preferred: submodule, shallow).

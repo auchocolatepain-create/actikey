@@ -1,5 +1,5 @@
 [submodule "android/vendor/HeliBoard"]
   path = android/vendor/HeliBoard
   url = https://github.com/Helium314/HeliBoard.git
-  branch = v2.3.1
+  branch = v2.3
   shallow = true

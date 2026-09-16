@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Minimal platform theme (no new dependency). Full HeliBoard theme merge
+       happens once vendor/HeliBoard submodule sources are overlaid. -->
+  <style name="ActikeyTheme" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>

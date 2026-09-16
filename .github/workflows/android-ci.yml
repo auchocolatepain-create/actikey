@@ -16,6 +16,10 @@ jobs:
           distribution: temurin
           java-version: '17'
       - uses: gradle/actions/setup-gradle@v4
+      - name: Ensure Android SDK packages (compileSdk 34)
+        run: |
+          sdkmanager --install "platforms;android-34" "build-tools;34.0.0" "platform-tools" || true
+          yes | sdkmanager --licenses > /dev/null || true
       - name: Check HeliBoard pin retained
         run: test -f android/HELIBOARD_PIN.md && grep -q HeliBoard android/HELIBOARD_PIN.md
       - name: Check language trim (en + fa only)
